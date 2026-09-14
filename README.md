@@ -6,7 +6,6 @@ Every Blocks API call goes through a single `createBlocksClient()` instance in `
 
 ## Blocks project
 
-- Tenant / `x-blocks-key`: `Dbe0eefff372a4ed3a61e3eeb8e0d454f`
 - App domain: `https://drdajd.slsblx.com`
 - API: `https://blocksapi.slsblx.com`
 - Public OIDC client id is in `.env` / `.env.example`
