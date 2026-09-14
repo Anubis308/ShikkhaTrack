@@ -1,0 +1,11 @@
+{
+  "schemaName": "StaffProfile",
+  "collectionName": "StaffProfiles",
+  "schemaType": 1,
+  "fields": [
+    { "name": "UserId", "type": "String", "isArray": false, "isPIIData": false, "description": "Linked Blocks IAM user id", "requiredOn": "None" },
+    { "name": "Role", "type": "String", "isArray": false, "isPIIData": false, "description": "SupportStaff, Teacher, or BranchManager", "requiredOn": "None" },
+    { "name": "BatchId", "type": "String", "isArray": false, "isPIIData": false, "description": "Required when Role is Teacher", "requiredOn": "None" },
+    { "name": "DisplayName", "type": "String", "isArray": false, "isPIIData": true, "requiredOn": "None" }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "project": {
+    "tenantId": "Dbe0eefff372a4ed3a61e3eeb8e0d454f",
+    "apiUrl": "https://blocksapi.slsblx.com",
+    "appDomain": "https://drdajd.slsblx.com"
+  },
+  "data": {
+    "schemas": "blocks/data/schemas",
+    "rules": "blocks/data/rules.json"
+  }
+}

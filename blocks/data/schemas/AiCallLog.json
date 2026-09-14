@@ -1,0 +1,12 @@
+{
+  "schemaName": "AiCallLog",
+  "collectionName": "AiCallLogs",
+  "schemaType": 1,
+  "fields": [
+    { "name": "CallType", "type": "String", "isArray": false, "isPIIData": false, "description": "Classify, DraftReply, or AtRisk", "requiredOn": "None" },
+    { "name": "RelatedCaseId", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "CalledByUserId", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "CalledAt", "type": "DateTime", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "Model", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" }
+  ]
+}

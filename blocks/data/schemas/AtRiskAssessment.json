@@ -1,0 +1,12 @@
+{
+  "schemaName": "AtRiskAssessment",
+  "collectionName": "AtRiskAssessments",
+  "schemaType": 1,
+  "fields": [
+    { "name": "StudentId", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "Score", "type": "Float", "isArray": false, "isPIIData": false, "description": "0-100 at-risk score", "requiredOn": "None" },
+    { "name": "Level", "type": "String", "isArray": false, "isPIIData": false, "description": "Low, Medium, or High", "requiredOn": "None" },
+    { "name": "Reasoning", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "ComputedAt", "type": "DateTime", "isArray": false, "isPIIData": false, "requiredOn": "None" }
+  ]
+}

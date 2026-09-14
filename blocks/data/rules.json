@@ -1,0 +1,61 @@
+{
+  "security": [
+    {
+      "schemaName": "Batch",
+      "schemaId": "0358172f-e623-42c8-952c-c43e097858aa",
+      "readAccessLevel": 1,
+      "writeAccessLevel": 1,
+      "editAccessLevel": 1,
+      "deleteAccessLevel": 1
+    },
+    {
+      "schemaName": "StudentProfile",
+      "schemaId": "34520ba0-49df-482d-a420-fe1c6dd04183",
+      "readAccessLevel": 1,
+      "writeAccessLevel": 1,
+      "editAccessLevel": 1,
+      "deleteAccessLevel": 1
+    },
+    {
+      "schemaName": "StaffProfile",
+      "schemaId": "ff6f45ca-3664-4c78-8cc7-d97865f99f1f",
+      "readAccessLevel": 1,
+      "writeAccessLevel": 1,
+      "editAccessLevel": 1,
+      "deleteAccessLevel": 1
+    },
+    {
+      "schemaName": "SupportCase",
+      "schemaId": "1fbc4b2a-deb3-4c7c-a81c-5021522b71ed",
+      "readAccessLevel": 1,
+      "writeAccessLevel": 1,
+      "editAccessLevel": 1,
+      "deleteAccessLevel": 1
+    },
+    {
+      "schemaName": "CaseMessage",
+      "schemaId": "a28b6de3-53ce-4297-aa26-ef1ab7a21e1c",
+      "readAccessLevel": 1,
+      "writeAccessLevel": 1,
+      "editAccessLevel": 1,
+      "deleteAccessLevel": 1
+    },
+    {
+      "schemaName": "AiCallLog",
+      "schemaId": "adadb588-12b2-4833-bd97-ffb9a2b3e308",
+      "readAccessLevel": 1,
+      "writeAccessLevel": 1,
+      "editAccessLevel": 1,
+      "deleteAccessLevel": 1
+    },
+    {
+      "schemaName": "AtRiskAssessment",
+      "schemaId": "3e0fc8c3-aa61-48b5-b5f7-95c5c2164bed",
+      "readAccessLevel": 1,
+      "writeAccessLevel": 1,
+      "editAccessLevel": 1,
+      "deleteAccessLevel": 1
+    }
+  ],
+  "policies": []
+}

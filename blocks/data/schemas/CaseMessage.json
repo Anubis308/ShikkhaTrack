@@ -1,0 +1,13 @@
+{
+  "schemaName": "CaseMessage",
+  "collectionName": "CaseMessages",
+  "schemaType": 1,
+  "fields": [
+    { "name": "CaseId", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "Message", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "IsAiGenerated", "type": "Boolean", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "IsHumanEdited", "type": "Boolean", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "SenderRole", "type": "String", "isArray": false, "isPIIData": false, "description": "Student, SupportStaff, Teacher, or BranchManager", "requiredOn": "None" },
+    { "name": "SentAt", "type": "DateTime", "isArray": false, "isPIIData": false, "requiredOn": "None" }
+  ]
+}

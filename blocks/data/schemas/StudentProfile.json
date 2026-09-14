@@ -1,0 +1,12 @@
+{
+  "schemaName": "StudentProfile",
+  "collectionName": "StudentProfiles",
+  "schemaType": 1,
+  "fields": [
+    { "name": "Roll", "type": "String", "isArray": false, "isPIIData": false, "description": "Unique roll number, e.g. HSC-1187", "requiredOn": "None" },
+    { "name": "FullName", "type": "String", "isArray": false, "isPIIData": true, "requiredOn": "None" },
+    { "name": "BatchId", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "GuardianPhone", "type": "String", "isArray": false, "isPIIData": true, "requiredOn": "None" },
+    { "name": "UserId", "type": "String", "isArray": false, "isPIIData": false, "description": "Linked Blocks IAM user id once claimed", "requiredOn": "None" }
+  ]
+}

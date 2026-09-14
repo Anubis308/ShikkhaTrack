@@ -1,0 +1,22 @@
+{
+  "schemaName": "SupportCase",
+  "collectionName": "SupportCases",
+  "schemaType": 1,
+  "fields": [
+    { "name": "StudentId", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "BatchId", "type": "String", "isArray": false, "isPIIData": false, "description": "Denormalized from the student for teacher-scoped queries", "requiredOn": "None" },
+    { "name": "RawMessage", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "Channel", "type": "String", "isArray": false, "isPIIData": false, "description": "Facebook, Phone, InPerson, or Other", "requiredOn": "None" },
+    { "name": "Category", "type": "String", "isArray": true, "isPIIData": false, "description": "Fees, ClassAccess, ExamSchedule, Scholarship, TeacherComplaint, Other", "requiredOn": "None" },
+    { "name": "Priority", "type": "String", "isArray": false, "isPIIData": false, "description": "Low, Normal, or High", "requiredOn": "None" },
+    { "name": "HardshipFlag", "type": "Boolean", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "Status", "type": "String", "isArray": false, "isPIIData": false, "description": "Open, InProgress, Resolved, or Closed", "requiredOn": "None" },
+    { "name": "AssigneeUserId", "type": "String", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "RepeatCaseCountInWindow", "type": "Float", "isArray": false, "isPIIData": false, "description": "Snapshot of cases for this student in the last 42 days", "requiredOn": "None" },
+    { "name": "IsRepeatEscalation", "type": "Boolean", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "FirstResponseAt", "type": "DateTime", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "ResolvedAt", "type": "DateTime", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "AiClassified", "type": "Boolean", "isArray": false, "isPIIData": false, "requiredOn": "None" },
+    { "name": "AttachmentFileIds", "type": "String", "isArray": true, "isPIIData": false, "requiredOn": "None" }
+  ]
+}

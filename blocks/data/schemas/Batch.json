@@ -1,0 +1,10 @@
+{
+  "schemaName": "Batch",
+  "collectionName": "Batches",
+  "schemaType": 1,
+  "fields": [
+    { "name": "Name", "type": "String", "isArray": false, "isPIIData": false, "description": "Batch display name, e.g. HSC-26 Science", "requiredOn": "None" },
+    { "name": "Category", "type": "String", "isArray": false, "isPIIData": false, "description": "HSC, Admission, BCS, or Other", "requiredOn": "None" },
+    { "name": "IsActive", "type": "Boolean", "isArray": false, "isPIIData": false, "requiredOn": "None" }
+  ]
+}
