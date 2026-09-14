@@ -2,7 +2,7 @@
 
 Coaching-centre student support desk on SELISE Blocks. React 18 + Vite + TypeScript. Auth is Blocks IAM (hosted OIDC plus email/password signup for students). Cases, roster, staff, AI logs, and at-risk scores live in the Blocks Data Gateway. There is no custom backend.
 
-Every Blocks API call goes through a single `createBlocksClient()` instance in `src/lib/blocks/client.ts`. OpenAI is the only non-Blocks HTTP call, and every classify / draft / at-risk request is written to the `AiCallLog` collection with a 30-call hourly cap.
+Every Blocks API call goes through a single `createBlocksClient()` instance in `src/lib/blocks/client.ts`. Classify / draft / at-risk go through a Blocks Logic webhook that calls a Blocks Agent; every request is written to the `AiCallLog` collection with a 30-call hourly cap.
 
 ## Blocks project
 
@@ -27,7 +27,7 @@ Add to your hosts file as Administrator:
 
 Open `https://drdajd.slsblx.com:5173` (not localhost). Trust the cert printed by `npm run cert`.
 
-Set `VITE_OPENAI_API_KEY` in `.env` for AI classify, draft reply, and at-risk scoring. That key is prefixed `VITE_` so Vite embeds it in the browser bundle — it is extractable from the client. The app mitigates spend with `AiCallLog` rate limiting (`gpt-4o-mini`, 30 calls/hour). A later phase can move the call behind a Blocks Cloud Function.
+Set `VITE_AI_WORKFLOW_WEBHOOK_URL` in `.env` for AI classify, draft reply, and at-risk scoring. Create the Blocks Agent + Workflow once (see `docs/blocks-agent-setup.md`) and paste the production webhook URL. The webhook currently has no auth (`authType=none`); the app still caps spend with `AiCallLog` rate limiting (30 calls/hour).
 
 ## First-run roles
 

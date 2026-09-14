@@ -1,13 +1,14 @@
 import { blocksClient } from "../../lib/blocks/client";
+import { blocksConfig } from "../../lib/blocks/config";
 import { assertMutationAccepted, fieldValue, normalizeList, type GatewayRecord } from "../../lib/data/gateway";
 import { CASE_CATEGORIES, CASE_PRIORITIES, type CaseCategory, type CasePriority } from "../../lib/roles";
 import { policySnippetText } from "./policySnippets";
 
-export const OPENAI_API_KEY_MISSING = "OPENAI_API_KEY_MISSING";
+export const AI_WEBHOOK_URL_MISSING = "AI_WEBHOOK_URL_MISSING";
 export const OPENAI_RATE_LIMIT = "OPENAI_RATE_LIMIT";
 export const AI_HOUR_MS = 60 * 60 * 1000;
 export const AI_HOURLY_LIMIT = 30;
-export const AI_MODEL = "gpt-4o-mini";
+export const AI_MODEL = "blocks-agent";
 
 export type AiCallType = "Classify" | "DraftReply" | "AtRisk";
 export type AiCallLog = GatewayRecord;
@@ -28,14 +29,45 @@ export type AtRiskResult = {
   reasoning: string;
 };
 
-function openaiKey(): string {
-  const key = import.meta.env.VITE_OPENAI_API_KEY as string | undefined;
-  if (!key) {
-    const error = new Error(OPENAI_API_KEY_MISSING);
-    error.name = OPENAI_API_KEY_MISSING;
+type WorkflowWebhookResponse = {
+  executionId?: string;
+  status?: string;
+  data?: unknown;
+};
+
+function webhookUrl(): string {
+  const url = import.meta.env.VITE_AI_WORKFLOW_WEBHOOK_URL as string | undefined;
+  if (!url?.trim()) {
+    const error = new Error(AI_WEBHOOK_URL_MISSING);
+    error.name = AI_WEBHOOK_URL_MISSING;
     throw error;
   }
-  return key;
+  return url.trim();
+}
+
+function composePrompt(system: string, user: string): string {
+  return `${system}
+
+User input:
+${user}
+
+Respond with ONLY a single valid JSON object matching the schema requested above. No prose, no markdown code fences, no extra keys.`;
+}
+
+function stripMarkdownFences(text: string): string {
+  const trimmed = text.trim();
+  const fenced = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+  return (fenced?.[1] ?? trimmed).trim();
+}
+
+function parseAgentJson<T>(data: unknown): T {
+  if (data && typeof data === "object") return data as T;
+  if (typeof data !== "string" || !data.trim()) throw new Error("AI agent returned an empty reply.");
+  try {
+    return JSON.parse(stripMarkdownFences(data)) as T;
+  } catch {
+    throw new Error("AI agent did not return valid JSON.");
+  }
 }
 
 export async function countRecentAiCalls(withinMs = AI_HOUR_MS): Promise<number> {
@@ -78,32 +110,22 @@ async function ensureBudget(): Promise<void> {
 
 async function chatJson<T>(system: string, user: string): Promise<T> {
   await ensureBudget();
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+  const response = await fetch(webhookUrl(), {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${openaiKey()}`,
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "x-blocks-key": blocksConfig.xBlocksKey
     },
-    body: JSON.stringify({
-      model: AI_MODEL,
-      temperature: 0.2,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: system },
-        { role: "user", content: user }
-      ]
-    })
+    body: JSON.stringify({ prompt: composePrompt(system, user) })
   });
-  const body = await response.json().catch(() => ({}));
+  const body = (await response.json().catch(() => ({}))) as WorkflowWebhookResponse & { message?: string };
   if (!response.ok) {
-    const message = typeof body === "object" && body && "error" in body
-      ? String((body as { error?: { message?: string } }).error?.message || response.statusText)
-      : `${response.status} ${response.statusText}`;
-    throw new Error(message || "OpenAI request failed.");
+    throw new Error(body.message || `${response.status} ${response.statusText}` || "AI workflow request failed.");
   }
-  const content = body?.choices?.[0]?.message?.content;
-  if (typeof content !== "string" || !content.trim()) throw new Error("OpenAI returned an empty reply.");
-  return JSON.parse(content) as T;
+  if (body.status !== "Completed") {
+    throw new Error(body.status?.trim() || "AI workflow did not complete.");
+  }
+  return parseAgentJson<T>(body.data);
 }
 
 function normalizeCategories(value: unknown): CaseCategory[] {
@@ -160,7 +182,7 @@ export async function draftReply(input: {
   );
   await writeCallLog({ CallType: "DraftReply", CalledByUserId: input.calledByUserId, RelatedCaseId: input.relatedCaseId });
   const reply = String(parsed.reply ?? "").trim();
-  if (!reply) throw new Error("OpenAI returned an empty draft.");
+  if (!reply) throw new Error("AI agent returned an empty draft.");
   return reply;
 }
 
@@ -182,8 +204,8 @@ export async function scoreAtRisk(input: {
 }
 
 export function aiErrorMessage(error: unknown, fallback: string): string {
-  if (error instanceof Error && error.name === OPENAI_API_KEY_MISSING) {
-    return "Set VITE_OPENAI_API_KEY in .env to use AI classify and draft.";
+  if (error instanceof Error && error.name === AI_WEBHOOK_URL_MISSING) {
+    return "Set VITE_AI_WORKFLOW_WEBHOOK_URL in .env to use AI classify and draft.";
   }
   if (error instanceof Error && error.name === OPENAI_RATE_LIMIT) {
     return `Hourly AI call cap (${AI_HOURLY_LIMIT}) reached. Try again later.`;

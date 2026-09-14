@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { LocalizationProvider } from "../../lib/i18n/LocalizationProvider";
+import { ThemeProvider } from "./ThemeProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +20,9 @@ const queryClient = new QueryClient({
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <LocalizationProvider>{children}</LocalizationProvider>
+      <ThemeProvider>
+        <LocalizationProvider>{children}</LocalizationProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

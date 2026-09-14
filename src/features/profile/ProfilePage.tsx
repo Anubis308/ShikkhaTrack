@@ -73,10 +73,12 @@ export function ProfilePage() {
         </div>
       </div>
 
-      <details className="raw-details">
-        <summary>View raw response</summary>
-        <JsonPanel value={profile ?? me.error ?? me.data} />
-      </details>
+      {import.meta.env.VITE_SHOW_DEBUG_PANELS === "true" ? (
+        <details className="raw-details">
+          <summary>View raw response</summary>
+          <JsonPanel value={profile ?? me.error ?? me.data} />
+        </details>
+      ) : null}
     </section>
   );
 }

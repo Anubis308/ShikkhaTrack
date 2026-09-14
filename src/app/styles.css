@@ -27,31 +27,31 @@
   --avatar-surface: #c0c9d1;
   --avatar-text: #262626;
   --radius: 0.5rem;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --popover: 222.2 84% 4.9%;
-    --primary: 218 75% 45%;
-    --primary-foreground: 0 0% 96%;
-    --secondary: 217.2 32.6% 17.5%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --high-emphasis: 0 0% 96%;
-    --low-emphasis: 0 0% 62%;
-    --success-bg: 146 40% 16%;
-    --success-fg: 146 60% 75%;
-    --warning-bg: 40 50% 18%;
-    --warning-fg: 43 90% 70%;
-  }
+:root.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --popover: 222.2 84% 4.9%;
+  --primary: 218 75% 45%;
+  --primary-foreground: 0 0% 96%;
+  --secondary: 217.2 32.6% 17.5%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --high-emphasis: 0 0% 96%;
+  --low-emphasis: 0 0% 62%;
+  --success-bg: 146 40% 16%;
+  --success-fg: 146 60% 75%;
+  --warning-bg: 40 50% 18%;
+  --warning-fg: 43 90% 70%;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -189,6 +189,7 @@ pre { background: hsl(var(--foreground)); border-radius: var(--radius); color: h
 .form-field input, .form-field select, .form-field textarea { border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 0 10px; transition: border-color 0.15s ease; }
 .form-field textarea { padding: 10px; }
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: hsl(var(--primary)); }
+.form-field select option, .pagination-size select option { background: hsl(var(--card)); color: hsl(var(--foreground)); }
 .form-field-invalid input, .form-field-invalid select, .form-field-invalid textarea { border-color: hsl(var(--destructive)); }
 .field-error { color: hsl(var(--destructive)); font-size: 12px; margin: 0; }
 .password-field { align-items: center; display: flex; }

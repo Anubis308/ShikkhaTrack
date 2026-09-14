@@ -1,10 +1,11 @@
-import { Activity, PanelLeft } from "lucide-react";
+import { Activity, Moon, PanelLeft, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { isNavActive, navItemsForRole } from "./navItems";
 import { UserMenu } from "./UserMenu";
 import { useT } from "../../lib/i18n/LocalizationProvider";
 import { useRole } from "../providers/RoleProvider";
+import { useTheme } from "../providers/ThemeProvider";
 
 const COLLAPSED_KEY = "blocks-app:sidebar-collapsed";
 const MOBILE_QUERY = "(max-width: 880px)";
@@ -27,6 +28,7 @@ export function AppShell({ activePath, children, onNavigate }: { activePath: str
   const [collapsedPref, setCollapsedPref] = useState(() => localStorage.getItem(COLLAPSED_KEY) === "true");
   const { t } = useT();
   const { homePath, role } = useRole();
+  const { theme, toggleTheme } = useTheme();
   const navItems = navItemsForRole(role);
   const collapsed = collapsedPref || isMobile;
   const activeItem = navItems.find((item) => isNavActive(item, activePath));
@@ -77,6 +79,14 @@ export function AppShell({ activePath, children, onNavigate }: { activePath: str
             </div>
           ) : null}
           <div className="topbar-spacer" />
+          <button
+            className="icon-button"
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
           <UserMenu onNavigate={onNavigate} />
         </header>
         <main>{children}</main>
