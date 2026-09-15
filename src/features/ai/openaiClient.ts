@@ -112,6 +112,7 @@ async function chatJson<T>(system: string, user: string): Promise<T> {
   await ensureBudget();
   const response = await fetch(webhookUrl(), {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       "x-blocks-key": blocksConfig.xBlocksKey
